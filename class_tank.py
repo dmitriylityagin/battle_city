@@ -29,6 +29,7 @@ class Tank:
         self.bulletDamage = 1
 
     def update(self):
+        oldX, oldY = self.rect.topleft
         keys = pg.key.get_pressed()
         if keys[self.keyLEFT]:
             self.rect.x -= self.moveSpeed
@@ -42,6 +43,11 @@ class Tank:
         elif keys[self.keyDOWN]:
             self.rect.y += self.moveSpeed
             self.direct = 2
+
+        for obj in objects:
+            if obj != self and self.rect.colliderect(obj.rect):
+                self.rect.topleft = oldX, oldY
+
         if keys[self.keySHOT] and self.shotTimer == 0:
             dx = DIRECTS[self.direct][0] * self.bulletSpeed
             dy = DIRECTS[self.direct][1] * self.bulletSpeed
