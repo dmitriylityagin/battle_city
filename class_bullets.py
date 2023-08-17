@@ -1,6 +1,7 @@
 import pygame as pg
 from framedraw import WIDTH, HEIGHT, window
 from game_object import objects
+from class_bang import Bang
 
 bullets = []
 
@@ -22,9 +23,10 @@ class Bullet:
             bullets.remove(self)
         else:
             for obj in self.objects:
-                if obj != self.parent and obj.rect.collidepoint(self.px, self.py):
+                if obj != self.parent and obj.type != 'bang' and obj.rect.collidepoint(self.px, self.py):
                     obj.damage(self.damage)
                     bullets.remove(self)
+                    Bang(self.px, self.py)
                     break
 
     def draw(self):

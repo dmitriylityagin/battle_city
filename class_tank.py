@@ -1,5 +1,5 @@
 import pygame as pg
-from framedraw import window, TILE
+from framedraw import window, TILE, imgTanks
 from game_object import objects
 from class_bullets import Bullet
 
@@ -28,7 +28,16 @@ class Tank:
         self.bulletSpeed = 5
         self.bulletDamage = 1
 
+        self.rank = 0
+        self.image = pg.transform.rotate(imgTanks[self.rank], -self.direct * 90)
+        self.rect = self.image.get_rect(center=self.rect.center)
+
     def update(self):
+        self.image = pg.transform.rotate(imgTanks[self.rank], -self.direct * 90)
+        self.image = pg.transform.scale(self.image, (self.image.get_width() - 5, self.image.get_height() - 5))
+        self.rect = self.image.get_rect(center=self.rect.center)
+
+
         oldX, oldY = self.rect.topleft
         keys = pg.key.get_pressed()
         if keys[self.keyLEFT]:
@@ -45,7 +54,7 @@ class Tank:
             self.direct = 2
 
         for obj in objects:
-            if obj != self and self.rect.colliderect(obj.rect):
+            if obj != self and obj.type != 'bang' and self.rect.colliderect(obj.rect):
                 self.rect.topleft = oldX, oldY
 
         if keys[self.keySHOT] and self.shotTimer == 0:
@@ -57,11 +66,8 @@ class Tank:
         if self.shotTimer > 0: self.shotTimer -= 1
 
     def draw(self):
-        pg.draw.rect(window, self.color, self.rect)
 
-        x = self.rect.centerx + DIRECTS[self.direct][0] * 30
-        y = self.rect.centery + DIRECTS[self.direct][1] * 30
-        pg.draw.line(window, 'white', self.rect.center, (x, y), 4)
+        window.blit(self.image, self.rect)
 
     def damage(self, value):
         self.hp -= value
