@@ -26,6 +26,11 @@ imgBangs = [
     pg.image.load('images/bang3.png'),
     ]
 
+imgBonuses = [
+    pg.image.load('images/bonus_star.png'),
+    pg.image.load('images/bonus_tank.png'),
+    ]
+
 
 
 

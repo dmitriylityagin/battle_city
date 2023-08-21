@@ -1,5 +1,5 @@
 import pygame as pg
-from framedraw import window, TILE, imgTanks
+from framedraw import window, TILE, imgTanks, HEIGHT, WIDTH
 from game_object import objects
 from class_bullets import Bullet
 
@@ -34,9 +34,9 @@ class Tank:
 
     def update(self):
         self.image = pg.transform.rotate(imgTanks[self.rank], -self.direct * 90)
-        self.image = pg.transform.scale(self.image, (self.image.get_width() - 5, self.image.get_height() - 5))
         self.rect = self.image.get_rect(center=self.rect.center)
-
+        self.image = pg.transform.scale(self.image, (TILE, TILE))
+        self.image = pg.transform.scale(self.image, (self.image.get_width() - 5, self.image.get_height() - 5))
 
         oldX, oldY = self.rect.topleft
         keys = pg.key.get_pressed()
@@ -52,9 +52,15 @@ class Tank:
         elif keys[self.keyDOWN]:
             self.rect.y += self.moveSpeed
             self.direct = 2
+        #bounds
+        if self.rect.y < 0: self.rect.y = 0
+        if self.rect.y > HEIGHT - (TILE - 5): self.rect.y = HEIGHT - (TILE - 5)
+        if self.rect.x < 0: self.rect.x = 0
+        if self.rect.x > WIDTH - (TILE - 5): self.rect.x = WIDTH - (TILE - 5)
+
 
         for obj in objects:
-            if obj != self and obj.type != 'bang' and self.rect.colliderect(obj.rect):
+            if obj != self and obj.type == 'block' and self.rect.colliderect(obj.rect):
                 self.rect.topleft = oldX, oldY
 
         if keys[self.keySHOT] and self.shotTimer == 0:

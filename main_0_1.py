@@ -2,11 +2,12 @@
 import pygame
 from random import *
 from class_tank import Tank
-from framedraw import window, FPS, TILE, WIDTH, HEIGHT
+from framedraw import window, FPS, TILE, WIDTH, HEIGHT, imgBonuses
 from game_object import objects
 from class_bullets import bullets
 from class_block import Block
 from class_ui import UI
+from class_bonus import Bonus
 pygame.init()
 
 clock = pygame.time.Clock()
@@ -30,7 +31,7 @@ for _ in range(50):
 
     Block(x, y, TILE)
 
-
+bonusTimer = 180
 play = True
 while play:
     for event in pygame.event.get():
@@ -38,6 +39,12 @@ while play:
             play = False
 
     keys = pygame.key.get_pressed()
+
+    if bonusTimer > 0:
+        bonusTimer -= 1
+    else:
+        Bonus(randint(50, WIDTH - 50), randint(50, HEIGHT - 50), randint(0, len(imgBonuses) - 1))
+        bonusTimer = randint(120, 240)
 
     for bullet in bullets:
         bullet.update()

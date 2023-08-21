@@ -22,12 +22,13 @@ class Bullet:
         if self.px < 0 or self.px > WIDTH or self.py < 0 or self.py > HEIGHT:
             bullets.remove(self)
         else:
-            for obj in self.objects:
-                if obj != self.parent and obj.type != 'bang' and obj.rect.collidepoint(self.px, self.py):
-                    obj.damage(self.damage)
-                    bullets.remove(self)
-                    Bang(self.px, self.py)
-                    break
+            for obj in objects:
+                if obj != self.parent and obj.type != 'bang' and obj.type != 'bonus':
+                    if obj.rect.collidepoint(self.px, self.py):
+                        obj.damage(self.damage)
+                        bullets.remove(self)
+                        Bang(self.px, self.py)
+                        break
 
     def draw(self):
         pg.draw.circle(self.window, 'yellow', (self.px, self.py), 2)
