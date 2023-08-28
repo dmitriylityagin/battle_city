@@ -1,5 +1,5 @@
 import pygame as pg
-from framedraw import window, TILE, imgTanks, HEIGHT, WIDTH
+from framedraw import window, TILE, imgTanks, HEIGHT, WIDTH, sndDead
 from game_object import objects
 from class_bullets import Bullet
 
@@ -27,6 +27,7 @@ class Tank:
         self.shotDelay = 60
         self.bulletSpeed = 5
         self.bulletDamage = 1
+        self.isMove = False
 
         self.rank = 0
         self.image = pg.transform.rotate(imgTanks[self.rank], -self.direct * 90)
@@ -43,15 +44,21 @@ class Tank:
         if keys[self.keyLEFT]:
             self.rect.x -= self.moveSpeed
             self.direct = 3
+            self.isMove = True
         elif keys[self.keyRIGHT]:
             self.rect.x += self.moveSpeed
             self.direct = 1
+            self.isMove = True
         elif keys[self.keyUP]:
             self.rect.y -= self.moveSpeed
             self.direct = 0
+            self.isMove = True
         elif keys[self.keyDOWN]:
             self.rect.y += self.moveSpeed
             self.direct = 2
+            self.isMove = True
+        else:
+            self.isMove = False
         #bounds
         if self.rect.y < 0: self.rect.y = 0
         if self.rect.y > HEIGHT - (TILE - 5): self.rect.y = HEIGHT - (TILE - 5)
@@ -80,3 +87,4 @@ class Tank:
         if self.hp <= 0:
             objects.remove(self)
             print(self.color, 'dead')
+            sndDead.play()

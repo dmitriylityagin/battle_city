@@ -32,6 +32,17 @@ imgBonuses = [
     ]
 
 
+sndShot = pg.mixer.Sound('sounds/shot.wav')
+sndDestroy = pg.mixer.Sound('sounds/destroy.wav')
+sndDead = pg.mixer.Sound('sounds/dead.wav')
+sndLive = pg.mixer.Sound('sounds/live.wav')
+sndStar = pg.mixer.Sound('sounds/star.wav')
+sndEngine = pg.mixer.Sound('sounds/engine.wav')
+sndEngine.set_volume(0.5)
+sndMove = pg.mixer.Sound('sounds/move.wav')
+sndMove.set_volume(0.5)
+
+
 
 
 

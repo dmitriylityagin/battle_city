@@ -1,7 +1,7 @@
 from game_object import objects
 import pygame as pg
 
-from framedraw import window, imgBrick, imgTanks, imgBonuses
+from framedraw import window, imgBrick, imgTanks, imgBonuses, sndStar, sndLive
 
 
 
@@ -26,10 +26,12 @@ class Bonus:
                     if obj.rank < len(imgTanks) - 1:
                         obj.rank += 1
                         objects.remove(self)
+                        sndStar.play()
                         break
                 elif self.bonusNum == 1:
                     obj.hp += 1
                     objects.remove(self)
+                    sndLive.play()
                     break
 
     def draw(self):

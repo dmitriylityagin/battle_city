@@ -1,5 +1,5 @@
 import pygame as pg
-from framedraw import WIDTH, HEIGHT, window
+from framedraw import WIDTH, HEIGHT, window, sndShot, sndDestroy
 from game_object import objects
 from class_bang import Bang
 
@@ -9,6 +9,7 @@ bullets = []
 class Bullet:
     def __init__(self, parent, px, py, dx, dy, damage):
         bullets.append(self)
+        sndShot.play()
         self.parent = parent
         self.window = window
         self.px, self.py = px, py
@@ -28,6 +29,7 @@ class Bullet:
                         obj.damage(self.damage)
                         bullets.remove(self)
                         Bang(self.px, self.py)
+                        sndDestroy.play()
                         break
 
     def draw(self):
