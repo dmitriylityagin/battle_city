@@ -2,7 +2,7 @@
 import pygame
 from random import *
 from class_tank import Tank
-from framedraw import window, FPS, TILE, WIDTH, HEIGHT, imgBonuses, sndMove, sndEngine
+from framedraw import window, FPS, TILE, WIDTH, HEIGHT, imgBonuses, sndMove, sndEngine, bonusTimer, timer, isMove, isWin
 from game_object import objects
 from class_bullets import bullets
 from class_block import Block
@@ -33,12 +33,6 @@ for _ in range(50):
         if not fined: break
 
     Block(x, y, TILE)
-
-bonusTimer = 180
-
-timer = 0
-isMove = False
-isWin = False
 
 play = True
 while play:
@@ -85,6 +79,13 @@ while play:
         obj.draw()
 
     ui.draw()
+
+    if isWin and timer == 1000:
+        sndMove.stop()
+        sndEngine.stop()
+
+        pygame.mixer.music.load('sounds/level_finish.mp3')
+        pygame.mixer.music.play()
 
     pygame.display.update()
     clock.tick(FPS)
