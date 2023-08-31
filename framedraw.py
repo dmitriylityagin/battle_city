@@ -9,6 +9,12 @@ window = pg.display.set_mode((800, 600))
 pg.init()
 
 
+bonusTimer = 180
+
+timer = 0
+isMove = False
+isWin = False
+
 imgBrick = pg.image.load('images/block_brick.png')
 imgTanks = [
     pg.image.load('images/tank1.png'),
