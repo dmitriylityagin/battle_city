@@ -1,13 +1,25 @@
+import json
 import pygame as pg
 from pygame.time import Clock
 
 WIDTH, HEIGHT = 800, 600
 TILE = 42
 FPS = 60
-
+f = open('score.json')
+score = json.load(f)
+score1 = str(score).split(' ')
+score_red = int(score1[1][1:-2])
+score_blue = int(score1[3][1:-2])
+print(score_red,score_blue)
 window = pg.display.set_mode((800, 600))
 pg.init()
 
+
+bonusTimer = 180
+
+timer = 0
+isMove = False
+isWin = False
 
 imgBrick = pg.image.load('images/block_brick.png')
 imgTanks = [
