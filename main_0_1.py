@@ -21,6 +21,7 @@ pygame.mixer.music.play()
 
 ui = UI()
 
+
 for _ in range(50):
     while True:
         x = randint(0, WIDTH // TILE - 1) * TILE
@@ -91,3 +92,4 @@ while play:
     clock.tick(FPS)
 
 pygame.quit()
+
