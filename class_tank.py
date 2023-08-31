@@ -1,5 +1,7 @@
+import json
+
 import pygame as pg
-from framedraw import window, TILE, imgTanks, HEIGHT, WIDTH, sndDead
+from framedraw import window, TILE, imgTanks, HEIGHT, WIDTH, sndDead, score_red, score_blue, score, f
 from game_object import objects
 from class_bullets import Bullet
 
@@ -59,12 +61,11 @@ class Tank:
             self.isMove = True
         else:
             self.isMove = False
-        #bounds
+        # bounds
         if self.rect.y < 0: self.rect.y = 0
         if self.rect.y > HEIGHT - (TILE - 5): self.rect.y = HEIGHT - (TILE - 5)
         if self.rect.x < 0: self.rect.x = 0
         if self.rect.x > WIDTH - (TILE - 5): self.rect.x = WIDTH - (TILE - 5)
-
 
         for obj in objects:
             if obj != self and obj.type == 'block' and self.rect.colliderect(obj.rect):
@@ -83,8 +84,27 @@ class Tank:
         window.blit(self.image, self.rect)
 
     def damage(self, value):
+        a = {}
+        score_r = score_red
+        score_b = score_blue
         self.hp -= value
         if self.hp <= 0:
             objects.remove(self)
             print(self.color, 'dead')
+            if self.color == 'red':
+                score_b += 1
+            else:
+                score_r += 1
+            print(score_b)
+            print(score_r)
+            scor = str(score).split(' ')
+            scor[1] = str(score_r)
+            scor[3] = str(score_b)
+            a['red'] = scor[1]
+            a['blue'] = scor[3]
+            print(a)
+            b = json.dumps(a)
+            with open("score.json", "w") as outfile:
+                outfile.write(b)
+            f.close()
             sndDead.play()
