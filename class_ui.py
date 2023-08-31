@@ -1,6 +1,6 @@
 import pygame as pg
 from game_object import objects
-from framedraw import window, WIDTH, HEIGHT, TILE, isWin
+from framedraw import window, WIDTH, HEIGHT, TILE, isWin, score_blue, score_red
 
 fontUI = pg.font.Font(None, 32)
 fontBig = pg.font.Font(None, 70)
@@ -21,8 +21,10 @@ class UI:
         for obj in objects:
             if obj.type == 'tank':
                 pg.draw.rect(window, obj.color, (5 + i * 70, 5, 22, 22))
-
-                text = fontUI.render(str(obj.rank), 1, 'black')
+                if obj.color == 'red':
+                    text = fontUI.render(str(score_red), 1, 'black')
+                elif obj.color == 'blue':
+                    text = fontUI.render(str(score_blue), 1, 'black')
                 rect = text.get_rect(center=(5 + i * 70 + 11, 5 + 11))
                 window.blit(text, rect)
 
@@ -35,7 +37,10 @@ class UI:
             if obj.type == 'tank':
                 pg.draw.rect(window, obj.color, (5 + i * 70, 5, 22, 22))
 
-                text = fontUI.render(str(obj.rank), 1, 'black')
+                if obj.color == 'red':
+                    text = fontUI.render(str(score_red), 1, 'black')
+                elif obj.color == 'blue':
+                    text = fontUI.render(str(score_blue), 1, 'black')
                 rect = text.get_rect(center=(5 + i * 70 + 11, 5 + 11))
                 window.blit(text, rect)
 
@@ -60,4 +65,3 @@ class UI:
             window.blit(text, rect)
 
             pg.draw.rect(window, tankWin.color, (WIDTH // 2 - 100, HEIGHT // 2, 200, 200))
-
